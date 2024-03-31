@@ -1,1 +1,265 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Open Envelope Animation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body{
+            font-family: sans-serif;
+            background: #333;
+        }
+        .env {
+            margin-top: 5%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .wrapper {
+          height: 200px;
+          width: 300px;
+          background-color: #3760C9;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          z-index: 0;
+        }
+
+        .lid {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          border-right: 150px solid transparent;
+          border-bottom: 100px solid transparent;
+          border-left: 150px solid transparent;
+          transform-origin: top;
+          transition: transform 0.25s linear;
+        }
+
+        /* Lid when closed */
+        .lid.one {
+          border-top: 100px solid #658ced;
+          transform: rotateX(0deg);
+          z-index: 3;
+          transition-delay: 0.75s;
+        }
+
+        /* Lid when opened */
+        .lid.two {
+          border-top: 100px solid #3760C9;
+          transform: rotateX(90deg);
+          z-index: 1;
+          transition-delay: 0.5s;
+        }
+
+        .envelope {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          border-top: 100px solid transparent;
+          border-right: 150px solid #C4DFF0;
+          border-bottom: 100px solid #C4DFF0;
+          border-left: 150px solid #a4d4f2;
+          z-index: 3;
+        }
+
+        .letter {
+          position: absolute;
+          top: 0;
+          width: 80%;
+          height: 100%;
+          background-color: white;
+          border-radius: 15px;
+          z-index: 2;
+          transition: 0.5s;
+        }
+
+        .letter p {
+          text-align: center;
+          font-size: 30px;
+          margin-top: 30px;
+          color: #3B4049;
+        }
+
+        .wrapper:hover .lid.one {
+            transform: rotateX(90deg);
+            transition-delay: 0s;
+        }
+
+        .wrapper:hover .lid.two {
+            transform: rotateX(180deg);
+            transition-delay: 0.25s;
+        }
+
+        .wrapper:hover .letter {
+          transform: translateY(-120px);
+          transition-delay: 0.5s;
+        }
+
+        .button-container {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        .button-container button {
+          padding: 10px 20px;
+          background-color: #ff69b4;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        /* Full-screen white background with fade-in animation */
+        .fade-in-bg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background: url(https://media.istockphoto.com/id/123338618/photo/paper.jpg?s=612x612&w=0&k=20&c=0OsDs0kjLgD-Ts3UajsfswRJ0j3cKW_iGXXrRIypIho=);
+            background-size: cover;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Text on the white background */
+        .text-container {
+            padding: 50px;
+            font-size: 15pt;
+            overflow-y: auto; /* Enable vertical scrolling */
+            text-align: center;
+            z-index: 101;
+             font-family: 'Indie Flower', cursive;
+             max-height: 100%; /* Limit maximum height to 80% of viewport */
+        }
+
+        .text-container h4 {
+            font-size: 48px;
+            color: #3B4049;
+            margin-bottom: 20px;
+             font-family: 'Indie Flower', cursive;
+        }
+ .button-container-2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-container-2 button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+            margin: 5px;
+        }
+
+        .firstbutton.clicked {
+            transform: scale(1.2);
+        }
+
+        .seccondbutton {
+            transform: scale(1); /* Initial scale */
+        }
+
+    </style>
+</head>
+<body>
+    <audio autoplay>
+  <source src="hbd.mp3" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+    <div style="color:#fff;text-align: center;font-size: 15pt;margin-top: 200px">Nyalain Volumenya yaa! 🔊🔊🔊</div>
+    <div style="color:#fff;text-align: center;font-size: 15pt;">Klik Amplopnya</div>
+    <div class="env">
+        <div class="wrapper">
+          <div class="lid one"></div>
+          <div class="lid two"></div>
+          <div class="envelope"></div>
+          <div class="letter">
+            <p>Halo Yaya</p>
+             <div class="button-container">
+                <button onclick="openEnvelope()">Klik Disini</button>
+            </div>
+          </div>
+        </div>
+    </div>
+   
+
+    <div class="fade-in-bg" id="fade-in-bg">
+        <div class="text-container">
+            <img src="hbd1.jpeg" style="max-width: 100%;">
+            <h4>Selamat Ulang Tahun!</h4>
+            <p>Aku gatau hrs ngomong gmn  Cuman mo blg barakallah fi umrik, selamat ulang tahun mantanku yg paling cantikkkk 🤍, ciee udh tua, <br>
+
+            selamat ulang tahun yaaa semoga panjang umur sehat selalu ya, semoga bisa wujudtin keinginannya ya aamiin,  <br><br>Oh iya nanti jam 10 aku mau pesen gojek buat kamu, nnti tolong diterima ya cantikk, nnti aku kasih nomormu ke bapak gojeknya, isinya nnti cari tau sndiri, <br><br>  maaf ku block lgi hbis ini yaa biar km bisa bahagia terus, ntr klo sm aku cuman gelut trs, <br><br> Km tau kan Kamu itu wanita pertama selain ibukku yg pernah peluk aku, aku gaakan lupa itu, aku akui aja aku bahagia bgt sm kamu, nemu cewe yg lucu imut, lucu kalo mukannya kesel makannya pengen ku bully trs wkkw <br><br> aku dulu pernah sebahagia itu tau sm kamu makasih ya mantan cantikku 🤍<br><br>  Semoga km tanpa aku bisa bahagia2 terus yaa dadaa <br><br> ~ A</p>
+              <div class="button-container-2">
+        <button class="firstbutton" onclick="enlargeFirstButton()">Klik Disini Kalo Masi Sayang Aku 🥰</button>
+        <br><br>
+        <button class="seccondbutton" onclick="shrinkSecondButton()">Klik Disini Kalo Udah Engga Sayang</button>
+    </div>
+        </div>
+    </div>
+
+<script>
+    function openEnvelope() {
+        document.querySelector('.wrapper').classList.add('open');
+        document.getElementById('fade-in-bg').style.display = 'block';
+    }
+</script>
+<script>
+        let scale = 1; // Initial scale factor
+        let scale2 = 1;
+
+        function enlargeFirstButton() {
+            location.href = "page2.html";
+        }
+
+        function shrinkSecondButton() {
+            const firstButton = document.querySelector('.firstbutton');
+            const seccondButton = document.querySelector('.seccondbutton');
+
+            firstButton.classList.remove('clicked');
+            scale -= 0.1; // Decrease the scale factor
+            scale2 += 0.03;
+            
+            if(scale > 0){
+                seccondButton.style.transform = `scale(${scale})`; // Apply the new scale factor
+                firstButton.style.transform = `scale(${scale2})`; // Apply the new scale factor 
+            }
+        }
+    </script>
+</body>
+</html>
